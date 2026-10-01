@@ -12,6 +12,7 @@ public class Tablero {
     private Map<TipoLinea, LineaDeAtaque> lineasJugador1;
     private Map<TipoLinea, LineaDeAtaque> lineasJugador2;
     private CartaClima climaActivo;
+    private Jugador jugadorDelClima
 
     public Tablero(Jugador jugador1, Jugador jugador2) {
         this.jugador1 = jugador1;
@@ -41,20 +42,41 @@ public class Tablero {
         linea.agregarCriatura(criatura);
     }
 
-    public void aplicarClima(CartaClima clima) {
-        // TODO: si ya habia un climaActivo, mandarlo al descarte del jugador que lo jugo
-        // luego, guardar "clima" como el nuevo climaActivo
+    public void aplicarClima(Jugador jugador, CartaClima nuevoClima) {
+        if (climaActivo != null) {
+            jugadorDelClima.getDescarte().agregar(climaActivo);
+        }
+        climaActivo = nuevoClima;
+        jugadorDelClima = jugador;
     }
 
-    public int calcularFuerzaJugador(Jugador jugador) {
-        // TODO: sumar la fuerza de las 3 lineas de ese jugador (calcularFuerzaTotal de cada una)
-        return 0;
+        public int calcularFuerzaJugador(Jugador jugador) {
+        int total = 0;
+        for (LineaDeAtaque linea : lineasDe(jugador).values()) {
+            total += linea.calcularFuerzaTotal();
+        }
+        return total;
     }
 
     public void limpiarTablero() {
-        // TODO: mandar todas las cartas de ambos jugadores al descarte y limpiar las lineas
+        moverTodoAlDescarte(lineasJugador1, jugador1);
+        moverTodoAlDescarte(lineasJugador2, jugador2);
+
+        if (climaActivo != null) {
+            jugadorDelClima.getDescarte().agregar(climaActivo);
+            climaActivo = null;
+            jugadorDelClima = null;
+        }
     }
 
+    private void moverTodoAlDescarte(Map<TipoLinea, LineaDeAtaque> lineas, Jugador jugador) {
+        for (LineaDeAtaque linea : lineas.values()) {
+            for (Criatura criatura : linea.getCriaturas()) {
+                jugador.getDescarte().agregar(criatura);
+            }
+            linea.limpiar();
+        }
+    }
     public CartaClima getClimaActivo() {
         return climaActivo;
     }

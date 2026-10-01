@@ -11,8 +11,7 @@ public class CartaClima extends Carta {
 
     @Override
     public void jugar(Jugador jugador, Tablero tablero) {
-        // TODO: avisarle al tablero que esta carta es ahora el clima activo
-        // (el tablero debe mandar al descarte el clima anterior, si habia uno)
+        tablero.aplicarClima(jugador, this);
     }
 
     public String getTipoClima() {

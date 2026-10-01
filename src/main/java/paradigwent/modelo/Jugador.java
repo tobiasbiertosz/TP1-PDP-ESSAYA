@@ -36,7 +36,9 @@ public class Jugador {
     }
 
     public void perderVida() {
-        // TODO: restar una vida (cuidando de no bajar de 0)
+        if (vidas > 0) {
+            vidas--;
+        }
     }
 
     public boolean estaEliminado() {

@@ -34,8 +34,13 @@ public class Partida {
     }
 
     public Jugador obtenerGanadorPartida() {
-        // TODO: devolver el jugador que NO se quedo sin vidas
-        return null;
+        if (jugador1.estaEliminado()) {
+            return jugador2;
+        } else if (jugador2.estaEliminado()) {
+            return jugador1;
+        } else {
+            return null; // la partida todavía no terminó
+        }
     }
 
     public Ronda getRondaActual() {

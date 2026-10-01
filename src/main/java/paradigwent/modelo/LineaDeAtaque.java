@@ -19,8 +19,11 @@ public class LineaDeAtaque {
     }
 
     public int calcularFuerzaTotal() {
-        // TODO: sumar la fuerzaAtaque de cada criatura (considerando clima y efectos activos)
-        return 0;
+        int total = 0;
+        for (Criatura criatura : criaturas) {
+            total += criatura.getFuerzaAtaque();
+        }
+        return total;
     }
 
     public void limpiar() {

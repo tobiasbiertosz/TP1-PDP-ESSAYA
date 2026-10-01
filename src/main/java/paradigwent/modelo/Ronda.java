@@ -18,25 +18,51 @@ public class Ronda {
     }
 
     public void jugarTurno(Carta cartaElegida) {
-        // TODO: si cartaElegida no es null, turnoActual.jugarCarta(cartaElegida, tablero)
-        // TODO: si es null, turnoActual.pasarTurno()
-        // TODO: pasarle el turno al otro jugador (si no paso)
+        if (cartaElegida != null) {
+            turnoActual.jugarCarta(cartaElegida, tablero);
+        } else {
+            turnoActual.pasarTurno();
+        }
+
+        Jugador otroJugador = (turnoActual == jugador1) ? jugador2 : jugador1;
+        if (!otroJugador.haPasado()) {
+            turnoActual = otroJugador;
+        }
+        // si el otro ya pasó, turnoActual queda igual: el mismo jugador sigue jugando
     }
 
     public boolean ambosPasaron() {
         return jugador1.haPasado() && jugador2.haPasado();
     }
 
+    /**
+     * Devuelve el jugador con más fuerza. Si hay empate, devuelve null.
+     */
     public Jugador determinarGanador() {
-        // TODO: comparar tablero.calcularFuerzaJugador(jugador1) vs jugador2
-        // devolver el que tenga mas fuerza, o null si empatan
-        return null;
+        int fuerza1 = tablero.calcularFuerzaJugador(jugador1);
+        int fuerza2 = tablero.calcularFuerzaJugador(jugador2);
+
+        if (fuerza1 > fuerza2) {
+            return jugador1;
+        } else if (fuerza2 > fuerza1) {
+            return jugador2;
+        } else {
+            return null;
+        }
     }
 
     public void finalizarRonda() {
-        // TODO: segun el resultado de determinarGanador(), restar vidas
-        // (si empatan, ambos pierden una vida)
-        // TODO: llamar a tablero.limpiarTablero()
+        Jugador ganador = determinarGanador();
+
+        if (ganador == null) {
+            jugador1.perderVida();
+            jugador2.perderVida();
+        } else {
+            Jugador perdedor = (ganador == jugador1) ? jugador2 : jugador1;
+            perdedor.perderVida();
+        }
+
+        tablero.limpiarTablero();
     }
 
     public Jugador getTurnoActual() {
