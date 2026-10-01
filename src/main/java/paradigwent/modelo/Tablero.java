@@ -12,7 +12,7 @@ public class Tablero {
     private Map<TipoLinea, LineaDeAtaque> lineasJugador1;
     private Map<TipoLinea, LineaDeAtaque> lineasJugador2;
     private CartaClima climaActivo;
-    private Jugador jugadorDelClima
+    private Jugador jugadorDelClima;
 
     public Tablero(Jugador jugador1, Jugador jugador2) {
         this.jugador1 = jugador1;
