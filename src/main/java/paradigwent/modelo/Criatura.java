@@ -16,8 +16,9 @@ public class Criatura extends Carta {
 
     @Override
     public void jugar(Jugador jugador, Tablero tablero) {
-        // TODO: pedirle al tablero que la coloque en la linea de ataque correspondiente
-        // TODO: si tieneHabilidadEspecial es true, llamar a activarHabilidad(tablero)
+        tablero.colocarCriatura(jugador, this);
+        // La activación de habilidades la dejamos para más adelante,
+        // cuando trabajemos CartaEfecto y CartaClima. Por ahora no se llama.
     }
 
     public void activarHabilidad(Tablero tablero) {

@@ -6,6 +6,8 @@ package paradigwent.modelo;
  */
 public class Partida {
 
+    public static final int CANTIDAD_CARTAS_MANO_INICIAL = 10;
+    public static final int VIDAS_INICIALES = 3;
     private Jugador jugador1;
     private Jugador jugador2;
     private Ronda rondaActual;

@@ -13,7 +13,7 @@ public class Ronda {
     public Ronda(Jugador jugador1, Jugador jugador2) {
         this.jugador1 = jugador1;
         this.jugador2 = jugador2;
-        this.tablero = new Tablero();
+        this.tablero = new Tablero(jugador1, jugador2);
         this.turnoActual = jugador1;
     }
 

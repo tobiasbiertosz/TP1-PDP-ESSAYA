@@ -1,5 +1,7 @@
 package paradigwent.modelo;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -14,8 +16,12 @@ public class Mazo {
     }
 
     public List<Carta> repartirMano(int cantidad) {
-        // TODO: sortear "cantidad" cartas al azar, sacarlas del mazo y devolverlas
-        return null;
+        Collections.shuffle(cartas);
+        List<Carta> mano = new ArrayList<>();
+        for (int i = 0; i < cantidad && !cartas.isEmpty(); i++) {
+            mano.add(cartas.remove(0));
+        }
+        return mano;
     }
 
     public boolean estaVacio() {

@@ -23,7 +23,8 @@ public class Jugador {
     }
 
     public void jugarCarta(Carta carta, Tablero tablero) {
-        // TODO: sacar la carta de la mano (mano.quitarCarta) y llamar a carta.jugar(this, tablero)
+        mano.quitarCarta(carta);
+        carta.jugar(this, tablero);
     }
 
     public void pasarTurno() {

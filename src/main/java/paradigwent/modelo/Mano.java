@@ -1,10 +1,9 @@
 package paradigwent.modelo;
 
+import paradigwent.modelo.exceptions.IndiceInvalidoException;
+
 import java.util.List;
 
-/**
- * Cartas disponibles que el jugador puede jugar durante la partida.
- */
 public class Mano {
 
     private List<Carta> cartas;
@@ -14,12 +13,14 @@ public class Mano {
     }
 
     public Carta elegirCarta(int indice) {
-        // TODO: devolver la carta en esa posicion (validar que el indice exista)
-        return null;
+        if (indice < 0 || indice >= cartas.size()) {
+            throw new IndiceInvalidoException("No existe una carta en la posición " + indice);
+        }
+        return cartas.get(indice);
     }
 
     public void quitarCarta(Carta carta) {
-        // TODO: sacar la carta de la mano una vez jugada
+        cartas.remove(carta);
     }
 
     public boolean estaVacia() {

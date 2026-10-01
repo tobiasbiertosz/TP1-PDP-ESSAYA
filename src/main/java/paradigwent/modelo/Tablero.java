@@ -7,12 +7,15 @@ import java.util.Map;
  * Estado del tablero para ambos jugadores durante una ronda.
  */
 public class Tablero {
-
+    private Jugador jugador1;
+    private Jugador jugador2;
     private Map<TipoLinea, LineaDeAtaque> lineasJugador1;
     private Map<TipoLinea, LineaDeAtaque> lineasJugador2;
     private CartaClima climaActivo;
 
-    public Tablero() {
+    public Tablero(Jugador jugador1, Jugador jugador2) {
+        this.jugador1 = jugador1;
+        this.jugador2 = jugador2;
         this.lineasJugador1 = new EnumMap<>(TipoLinea.class);
         this.lineasJugador2 = new EnumMap<>(TipoLinea.class);
         for (TipoLinea tipo : TipoLinea.values()) {
@@ -21,9 +24,21 @@ public class Tablero {
         }
     }
 
+    //Método privado "ayudante": dado un jugador, devuelve SU mapa de líneas
+    // Lo vamos a reusar en varios métodos de acá abajo.
+    private Map<TipoLinea, LineaDeAtaque> lineasDe(Jugador jugador) {
+        if (jugador == jugador1) {
+            return lineasJugador1;
+        } else {
+            return lineasJugador2;
+        }
+    }
+
+
     public void colocarCriatura(Jugador jugador, Criatura criatura) {
-        // TODO: buscar la linea correspondiente (segun el jugador y el tipoLinea de la criatura)
-        // y agregarla ahi con lineaDeAtaque.agregarCriatura(criatura)
+        Map<TipoLinea, LineaDeAtaque> lineas = lineasDe(jugador);
+        LineaDeAtaque linea = lineas.get(criatura.getTipoLinea());
+        linea.agregarCriatura(criatura);
     }
 
     public void aplicarClima(CartaClima clima) {
