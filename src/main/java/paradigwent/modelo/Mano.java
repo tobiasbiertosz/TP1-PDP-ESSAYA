@@ -1,15 +1,18 @@
 package paradigwent.modelo;
 
+import paradigwent.modelo.exceptions.CartaNoEstaEnManoException;
 import paradigwent.modelo.exceptions.IndiceInvalidoException;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Mano {
 
-    private List<Carta> cartas;
+    private final List<Carta> cartas;
 
     public Mano(List<Carta> cartasIniciales) {
-        this.cartas = cartasIniciales;
+        this.cartas = new ArrayList<>(cartasIniciales);
     }
 
     public Carta elegirCarta(int indice) {
@@ -20,7 +23,9 @@ public class Mano {
     }
 
     public void quitarCarta(Carta carta) {
-        cartas.remove(carta);
+        if (!cartas.remove(carta)) {
+            throw new CartaNoEstaEnManoException("La carta " + carta.getNombre() + " no está en la mano");
+        }
     }
 
     public boolean estaVacia() {
@@ -28,6 +33,6 @@ public class Mano {
     }
 
     public List<Carta> getCartas() {
-        return cartas;
+        return Collections.unmodifiableList(cartas);
     }
 }

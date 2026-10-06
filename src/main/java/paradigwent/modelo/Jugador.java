@@ -1,16 +1,18 @@
 package paradigwent.modelo;
 
+import paradigwent.modelo.objetivos.Objetivo;
+
 public class Jugador {
 
-    static final  int CANT_VIDAS = 3;
+    static final int CANT_VIDAS = 3;
 
-    protected String nombre;
-    protected Mazo mazo;
-    protected Mano mano;
-    protected PilaDescarte descarte;
-    protected Faccion faccion;
-    protected int vidas;
-    protected boolean paso;
+    private final String nombre;
+    private final Mazo mazo;
+    private final Mano mano;
+    private final PilaDescarte descarte;
+    private final Faccion faccion;
+    private int vidas;
+    private boolean paso;
 
     public Jugador(String nombre, Mazo mazo, Mano mano, Faccion faccion) {
         this.nombre = nombre;
@@ -22,9 +24,13 @@ public class Jugador {
         this.paso = false;
     }
 
-    public void jugarCarta(Carta carta, Tablero tablero) {
+    public void jugarCarta(Carta carta, Tablero tablero, Objetivo objetivo) {
         mano.quitarCarta(carta);
-        carta.jugar(this, tablero);
+        carta.jugar(this, tablero, objetivo);
+    }
+
+    public void descartar(Carta carta) {
+        descarte.agregar(carta);
     }
 
     public void pasarTurno() {
@@ -41,12 +47,20 @@ public class Jugador {
         }
     }
 
+    public void rendirse() {
+        vidas = 0;
+    }
+
     public boolean estaEliminado() {
         return vidas <= 0;
     }
 
     public boolean haPasado() {
         return paso;
+    }
+
+    public boolean sinCartas() {
+        return mano.estaVacia();
     }
 
     public String getNombre() {
@@ -63,6 +77,10 @@ public class Jugador {
 
     public PilaDescarte getDescarte() {
         return descarte;
+    }
+
+    public Faccion getFaccion() {
+        return faccion;
     }
 
     public int getVidas() {

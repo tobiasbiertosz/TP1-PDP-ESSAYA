@@ -12,7 +12,7 @@ public class Mazo {
     private List<Carta> cartas;
 
     public Mazo(List<Carta> cartas) {
-        this.cartas = cartas;
+        this.cartas = new ArrayList<>(cartas);
     }
 
     public List<Carta> repartirMano(int cantidad) {

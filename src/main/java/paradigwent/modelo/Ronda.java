@@ -1,43 +1,56 @@
 package paradigwent.modelo;
 
+import paradigwent.modelo.objetivos.Objetivo;
+
 /**
  * Controla el desarrollo de una ronda: turnos alternados hasta que ambos pasen.
  */
 public class Ronda {
 
-    private Jugador jugador1;
-    private Jugador jugador2;
-    private Tablero tablero;
+    private final Jugador jugador1;
+    private final Jugador jugador2;
+    private final Tablero tablero;
     private Jugador turnoActual;
 
-    public Ronda(Jugador jugador1, Jugador jugador2) {
+    public Ronda(Jugador jugador1, Jugador jugador2, Jugador primero) {
         this.jugador1 = jugador1;
         this.jugador2 = jugador2;
         this.tablero = new Tablero(jugador1, jugador2);
-        this.turnoActual = jugador1;
+        this.turnoActual = primero;
+        pasarSiNoTieneCartas();
     }
 
-    public void jugarTurno(Carta cartaElegida) {
-        if (cartaElegida != null) {
-            turnoActual.jugarCarta(cartaElegida, tablero);
-        } else {
-            turnoActual.pasarTurno();
-        }
+    public void jugarCarta(Carta carta, Objetivo objetivo) {
+        turnoActual.jugarCarta(carta, tablero, objetivo);
+        avanzarTurno();
+    }
 
-        Jugador otroJugador = (turnoActual == jugador1) ? jugador2 : jugador1;
+    public void pasar() {
+        turnoActual.pasarTurno();
+        avanzarTurno();
+    }
+
+    private void avanzarTurno() {
+        Jugador otroJugador = tablero.oponenteDe(turnoActual);
         if (!otroJugador.haPasado()) {
             turnoActual = otroJugador;
         }
-        // si el otro ya pasó, turnoActual queda igual: el mismo jugador sigue jugando
+        // si el otro ya paso, turnoActual queda igual: el mismo jugador sigue jugando
+        pasarSiNoTieneCartas();
+    }
+
+    /** Sin cartas en la mano no hay nada para jugar: pasa automaticamente. */
+    private void pasarSiNoTieneCartas() {
+        if (!ambosPasaron() && turnoActual.sinCartas()) {
+            pasar();
+        }
     }
 
     public boolean ambosPasaron() {
         return jugador1.haPasado() && jugador2.haPasado();
     }
 
-    /**
-     * Devuelve el jugador con más fuerza. Si hay empate, devuelve null.
-     */
+    /** Devuelve el jugador con mas fuerza. Si hay empate, devuelve null. */
     public Jugador determinarGanador() {
         int fuerza1 = tablero.calcularFuerzaJugador(jugador1);
         int fuerza2 = tablero.calcularFuerzaJugador(jugador2);
@@ -58,8 +71,7 @@ public class Ronda {
             jugador1.perderVida();
             jugador2.perderVida();
         } else {
-            Jugador perdedor = (ganador == jugador1) ? jugador2 : jugador1;
-            perdedor.perderVida();
+            tablero.oponenteDe(ganador).perderVida();
         }
 
         tablero.limpiarTablero();

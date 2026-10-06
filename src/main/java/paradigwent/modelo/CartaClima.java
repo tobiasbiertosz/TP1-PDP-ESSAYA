@@ -1,20 +1,23 @@
 package paradigwent.modelo;
 
+import paradigwent.modelo.efectos.EfectoClima;
+import paradigwent.modelo.objetivos.Objetivo;
+
 public class CartaClima extends Carta {
 
-    private String tipoClima;
+    private final EfectoClima efecto;
 
-    public CartaClima(String nombre, Faccion faccion, String tipoClima) {
+    public CartaClima(String nombre, Faccion faccion, EfectoClima efecto) {
         super(nombre, faccion);
-        this.tipoClima = tipoClima;
+        this.efecto = efecto;
     }
 
     @Override
-    public void jugar(Jugador jugador, Tablero tablero) {
+    public void jugar(Jugador jugador, Tablero tablero, Objetivo objetivo) {
         tablero.aplicarClima(jugador, this);
     }
 
-    public String getTipoClima() {
-        return tipoClima;
+    public int modificar(TipoLinea linea, int fuerza) {
+        return efecto.modificar(linea, fuerza);
     }
 }

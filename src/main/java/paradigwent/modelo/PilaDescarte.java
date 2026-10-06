@@ -1,6 +1,7 @@
 package paradigwent.modelo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  */
 public class PilaDescarte {
 
-    private List<Carta> cartas;
+    private final List<Carta> cartas;
 
     public PilaDescarte() {
         this.cartas = new ArrayList<>();
@@ -18,12 +19,7 @@ public class PilaDescarte {
         cartas.add(carta);
     }
 
-    public Carta recuperarUltima() {
-        // TODO: usar esto para efectos de "resucitar carta del descarte"
-        return null;
-    }
-
     public List<Carta> getCartas() {
-        return cartas;
+        return Collections.unmodifiableList(cartas);
     }
 }

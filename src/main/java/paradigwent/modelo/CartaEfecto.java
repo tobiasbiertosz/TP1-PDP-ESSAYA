@@ -1,20 +1,27 @@
 package paradigwent.modelo;
 
+import paradigwent.modelo.efectos.Efecto;
+import paradigwent.modelo.objetivos.Objetivo;
+
+import java.util.List;
+
 public class CartaEfecto extends Carta {
 
-    private String descripcionEfecto;
+    private final Efecto efecto;
 
-    public CartaEfecto(String nombre, Faccion faccion, String descripcionEfecto) {
+    public CartaEfecto(String nombre, Faccion faccion, Efecto efecto) {
         super(nombre, faccion);
-        this.descripcionEfecto = descripcionEfecto;
+        this.efecto = efecto;
     }
 
     @Override
-    public void jugar(Jugador jugador, Tablero tablero) {
-        // TODO: aplicar el efecto sobre la carta o la linea de ataque objetivo
+    public List<Objetivo> objetivosPosibles(Jugador jugador, Tablero tablero) {
+        return efecto.objetivosPosibles(jugador, tablero);
     }
 
-    public String getDescripcionEfecto() {
-        return descripcionEfecto;
+    @Override
+    public void jugar(Jugador jugador, Tablero tablero, Objetivo objetivo) {
+        efecto.aplicar(jugador, tablero, objetivo);
+        jugador.descartar(this);
     }
 }
