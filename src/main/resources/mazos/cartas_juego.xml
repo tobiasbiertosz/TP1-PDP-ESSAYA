@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<juego>
+    <faccion nombre="HUMANOS">
+        <carta tipo="CRIATURA" nombre="Soldado" cantidad="9" imagen="/imagenes/FACCION HUMANOS/CUERPO A CUERPO/CAC_HUMANO.jpg">
+            <fuerza>3</fuerza>
+            <linea>CUERPO_A_CUERPO</linea>
+        </carta>
+
+        <carta tipo="CRIATURA" nombre="Capitan" cantidad="1" imagen="/imagenes/FACCION HUMANOS/CUERPO A CUERPO/CAC_ESPECIAL_HUMANO.jpg">
+            <fuerza>10</fuerza>
+            <linea>CUERPO_A_CUERPO</linea>
+            <habilidad tipo="DUPLICAR_CRIATURA" bando="PROPIO"/>
+        </carta>
+
+        <carta tipo="CRIATURA" nombre="Arquero" cantidad="7" imagen="/imagenes/FACCION HUMANOS/DISTANCIA/DISTANCIA_HUMANO.jpg">
+            <fuerza>5</fuerza>
+            <linea>DISTANCIA</linea>
+        </carta>
+
+        <carta tipo="CRIATURA" nombre="Mago" cantidad="1" imagen="/imagenes/FACCION HUMANOS/DISTANCIA/DISTANCIA_ESPECIAL_HUMANO.jpg">
+            <fuerza>5</fuerza>
+            <linea>DISTANCIA</linea>
+            <habilidad tipo="RESUCITAR_ULTIMA_CARTA_DESCARTE"/>
+        </carta>
+
+        <carta tipo="CRIATURA" nombre="Catapulta" cantidad="7" imagen="/imagenes/FACCION HUMANOS/ASEDIO/ASEDIO_HUMANO.jpg">
+            <fuerza>8</fuerza>
+            <linea>ASEDIO</linea>
+        </carta>
+
+        <carta tipo="CLIMA" nombre="Dia soleado" cantidad="1" imagen="/imagenes/FACCION HUMANOS/CLIMA/CLIMA_DIA_SOLEADO.jpg">
+            <clima tipo="LIMITAR_FUERZA" maximo="1" lineas="DISTANCIA"/>
+        </carta>
+
+        <carta tipo="CLIMA" nombre="Lluvia" cantidad="1" imagen="/imagenes/FACCION HUMANOS/CLIMA/CLIMA_LLUVIA.jpg">
+            <clima tipo="LIMITAR_FUERZA" maximo="1" lineas="ASEDIO"/>
+        </carta>
+
+        <carta tipo="CLIMA" nombre="Nieve" cantidad="1" imagen="/imagenes/FACCION HUMANOS/CLIMA/CLIMA_NEVADA.jpg">
+            <clima tipo="LIMITAR_FUERZA" maximo="1" lineas="CUERPO_A_CUERPO"/>
+        </carta>
+
+        <carta tipo="EFECTO" nombre="Aumento de moral" cantidad="1" imagen="/imagenes/FACCION HUMANOS/EFECTO/Efecto_AUMENTO_MORAL_HUMANO.png">
+            <efecto tipo="DUPLICAR_FILA" bando="PROPIO"/>
+        </carta>
+
+        <carta tipo="EFECTO" nombre="Bomba" cantidad="1" imagen="/imagenes/FACCION HUMANOS/EFECTO/EFECTO_BOMBA_HUMANO.jpg">
+            <efecto tipo="ELIMINAR_CRIATURA" bando="ENEMIGO"/>
+        </carta>
+    </faccion>
+
+    <faccion nombre="ROBOT">
+        <carta tipo="CRIATURA" nombre="Militar" cantidad="9" imagen="/imagenes/FACCION ROBOTS/CUERPO A CUERPO/CAC_ROBOT.png">
+            <fuerza>3</fuerza>
+            <linea>CUERPO_A_CUERPO</linea>
+        </carta>
+
+        <carta tipo="CRIATURA" nombre="Jefe" cantidad="1" imagen="/imagenes/FACCION ROBOTS/CUERPO A CUERPO/CAC_Especial_ROBOT.jpg">
+            <fuerza>10</fuerza>
+            <linea>CUERPO_A_CUERPO</linea>
+            <habilidad tipo="DUPLICAR_CRIATURA" bando="PROPIO"/>
+        </carta>
+
+        <carta tipo="CRIATURA" nombre="Tirador" cantidad="7" imagen="/imagenes/FACCION ROBOTS/DISTANCIA/Distancia_ROBOT.png">
+            <fuerza>5</fuerza>
+            <linea>DISTANCIA</linea>
+        </carta>
+
+        <carta tipo="CRIATURA" nombre="Hechizero" cantidad="1" imagen="/imagenes/FACCION ROBOTS/DISTANCIA/DISTANCIA_ESPECIAL_ROBOT.jpg">
+            <fuerza>5</fuerza>
+            <linea>DISTANCIA</linea>
+            <habilidad tipo="RESUCITAR_ULTIMA_CARTA_DESCARTE"/>
+        </carta>
+
+        <carta tipo="CRIATURA" nombre="Tanque" cantidad="7" imagen="/imagenes/FACCION ROBOTS/ASEDIO/Asedio_ROBOT.png">
+            <fuerza>8</fuerza>
+            <linea>ASEDIO</linea>
+        </carta>
+
+        <carta tipo="CLIMA" nombre="Dia soleado" cantidad="1" imagen="/imagenes/FACCION HUMANOS/CLIMA/CLIMA_DIA_SOLEADO.jpg">
+            <clima tipo="LIMITAR_FUERZA" maximo="1" lineas="DISTANCIA"/>
+        </carta>
+
+        <carta tipo="CLIMA" nombre="Lluvia" cantidad="1" imagen="/imagenes/FACCION HUMANOS/CLIMA/CLIMA_LLUVIA.jpg">
+            <clima tipo="LIMITAR_FUERZA" maximo="1" lineas="ASEDIO"/>
+        </carta>
+
+        <carta tipo="CLIMA" nombre="Nieve" cantidad="1" imagen="/imagenes/FACCION HUMANOS/CLIMA/CLIMA_NEVADA.jpg">
+            <clima tipo="LIMITAR_FUERZA" maximo="1" lineas="CUERPO_A_CUERPO"/>
+        </carta>
+
+        <carta tipo="EFECTO" nombre="Aumento de moral" cantidad="1" imagen="/imagenes/FACCION ROBOTS/EFECTO/Efecto_Aumento_Moral_ROBOT.png">
+            <efecto tipo="DUPLICAR_FILA" bando="PROPIO"/>
+        </carta>
+
+        <carta tipo="EFECTO" nombre="Bomba" cantidad="1" imagen="/imagenes/FACCION ROBOTS/EFECTO/Efecto_Bomba_ROBOT.jpg">
+            <efecto tipo="ELIMINAR_CRIATURA" bando="ENEMIGO"/>
+        </carta>
+    </faccion>
+
+    <faccion nombre="MONSTRUOS">
+        <carta tipo="CRIATURA" nombre="Guerrero" cantidad="9" imagen="/imagenes/FACCION MONSTRUOS/CUERPO A CUERPO/CAC_MONSTRUO.jpg">
+            <fuerza>3</fuerza>
+            <linea>CUERPO_A_CUERPO</linea>
+        </carta>
+
+        <carta tipo="CRIATURA" nombre="Lider" cantidad="1" imagen="/imagenes/FACCION MONSTRUOS/CUERPO A CUERPO/CAC_Especial_MONSTRUO.jpg">
+            <fuerza>10</fuerza>
+            <linea>CUERPO_A_CUERPO</linea>
+            <habilidad tipo="DUPLICAR_CRIATURA" bando="PROPIO"/>
+        </carta>
+
+        <carta tipo="CRIATURA" nombre="Arquero vil" cantidad="7" imagen="/imagenes/FACCION MONSTRUOS/DISTANCIA/DISTANCIA_MONSTRUO.jpg">
+            <fuerza>5</fuerza>
+            <linea>DISTANCIA</linea>
+        </carta>
+
+        <carta tipo="CRIATURA" nombre="Bruja" cantidad="1" imagen="/imagenes/FACCION MONSTRUOS/DISTANCIA/Distancia_Especial_MONSTRUO.jpg">
+            <fuerza>5</fuerza>
+            <linea>DISTANCIA</linea>
+            <habilidad tipo="RESUCITAR_ULTIMA_CARTA_DESCARTE"/>
+        </carta>
+
+        <carta tipo="CRIATURA" nombre="Coloso" cantidad="7" imagen="/imagenes/FACCION MONSTRUOS/ASEDIO/ASEDIO_MONSTRUO.jpg">
+            <fuerza>8</fuerza>
+            <linea>ASEDIO</linea>
+        </carta>
+
+        <carta tipo="CLIMA" nombre="Dia soleado" cantidad="1" imagen="/imagenes/FACCION HUMANOS/CLIMA/CLIMA_DIA_SOLEADO.jpg">
+            <clima tipo="LIMITAR_FUERZA" maximo="1" lineas="DISTANCIA"/>
+        </carta>
+
+        <carta tipo="CLIMA" nombre="Lluvia" cantidad="1" imagen="/imagenes/FACCION HUMANOS/CLIMA/CLIMA_LLUVIA.jpg">
+            <clima tipo="LIMITAR_FUERZA" maximo="1" lineas="ASEDIO"/>
+        </carta>
+
+        <carta tipo="CLIMA" nombre="Nieve" cantidad="1" imagen="/imagenes/FACCION HUMANOS/CLIMA/CLIMA_NEVADA.jpg">
+            <clima tipo="LIMITAR_FUERZA" maximo="1" lineas="CUERPO_A_CUERPO"/>
+        </carta>
+
+        <carta tipo="EFECTO" nombre="Aumento de moral" cantidad="1" imagen="/imagenes/FACCION MONSTRUOS/EFECTO/Efecto_Aumento_moral_MONSTRUO.jpg">
+            <efecto tipo="DUPLICAR_FILA" bando="PROPIO"/>
+        </carta>
+
+        <carta tipo="EFECTO" nombre="Bomba" cantidad="1" imagen="/imagenes/FACCION MONSTRUOS/EFECTO/Efecto_Bomba_MONSTRUO.jpg">
+            <efecto tipo="ELIMINAR_CRIATURA" bando="ENEMIGO"/>
+        </carta>
+    </faccion>
+</juego>
