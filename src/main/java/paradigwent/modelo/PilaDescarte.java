@@ -22,4 +22,9 @@ public class PilaDescarte {
     public List<Carta> getCartas() {
         return Collections.unmodifiableList(cartas);
     }
+
+    /** Saca la ultima carta descartada, o null si el descarte esta vacio. */
+    public Carta sacarUltima() {
+        return cartas.isEmpty() ? null : cartas.remove(cartas.size() - 1);
+    }
 }

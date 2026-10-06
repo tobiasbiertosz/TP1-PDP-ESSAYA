@@ -9,8 +9,8 @@ public class CartaEfecto extends Carta {
 
     private final Efecto efecto;
 
-    public CartaEfecto(String nombre, Faccion faccion, Efecto efecto) {
-        super(nombre, faccion);
+    public CartaEfecto(String nombre, Faccion faccion, Efecto efecto, String imagen) {
+        super(nombre, faccion, imagen);
         this.efecto = efecto;
     }
 

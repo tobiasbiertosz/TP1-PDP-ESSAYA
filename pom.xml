@@ -39,7 +39,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>paradigwent.modelo.Main</mainClass>
+                    <mainClass>paradigwent/paradigwent.Main</mainClass>
                 </configuration>
             </plugin>
 

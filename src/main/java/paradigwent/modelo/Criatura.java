@@ -15,13 +15,14 @@ public class Criatura extends Carta {
     private int multiplicador;
 
     /** Criatura comun, sin habilidad. */
-    public Criatura(String nombre, Faccion faccion, int fuerzaBase, TipoLinea tipoLinea) {
-        this(nombre, faccion, fuerzaBase, tipoLinea, new SinEfecto());
+    public Criatura(String nombre, Faccion faccion, int fuerzaBase,
+                    TipoLinea tipoLinea, String imagen) {
+        this(nombre, faccion, fuerzaBase, tipoLinea, new SinEfecto(), imagen);
     }
 
     public Criatura(String nombre, Faccion faccion, int fuerzaBase,
-                    TipoLinea tipoLinea, Efecto habilidad) {
-        super(nombre, faccion);
+                    TipoLinea tipoLinea, Efecto habilidad, String imagen) {
+        super(nombre, faccion, imagen);
         this.fuerzaBase = fuerzaBase;
         this.tipoLinea = tipoLinea;
         this.habilidad = habilidad;
@@ -58,5 +59,10 @@ public class Criatura extends Carta {
 
     public TipoLinea getTipoLinea() {
         return tipoLinea;
+    }
+
+    @Override
+    public String textoDeFuerza() {
+        return String.valueOf(fuerzaBase);
     }
 }

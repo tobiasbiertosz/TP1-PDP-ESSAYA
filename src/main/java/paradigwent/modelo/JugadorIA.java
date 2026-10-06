@@ -18,6 +18,7 @@ public class JugadorIA extends Jugador {
     }
 
     /** Juega una carta de la mano o pasa. Solo se llama cuando es su turno. */
+    @Override
     public void jugarTurno(Partida partida) {
         Tablero tablero = partida.getRondaActual().getTablero();
         if (conviertePasar(tablero)) {
@@ -35,4 +36,11 @@ public class JugadorIA extends Jugador {
         return rival.haPasado()
                 && tablero.calcularFuerzaJugador(this) > tablero.calcularFuerzaJugador(rival);
     }
+
+    @Override
+    public boolean juegaSolo() {
+        return true;
+    }
+
+
 }

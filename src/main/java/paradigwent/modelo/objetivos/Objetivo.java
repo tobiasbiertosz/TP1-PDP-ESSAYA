@@ -6,6 +6,9 @@ package paradigwent.modelo.objetivos;
  */
 public interface Objetivo {
 
+    /** Texto corto para que el jugador distinga este objetivo al elegirlo. */
+    String descripcion();
+
     void duplicarFuerza();
 
     /** Envia el objetivo al descarte de su dueño. */

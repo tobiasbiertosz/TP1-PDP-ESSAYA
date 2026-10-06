@@ -1,5 +1,6 @@
-module org.example {
+module paradigwent {
     requires javafx.controls;
-    exports org.example;
+    requires java.xml;
+    exports paradigwent;
     exports paradigwent.modelo;
 }

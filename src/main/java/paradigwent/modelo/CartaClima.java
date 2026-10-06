@@ -7,8 +7,8 @@ public class CartaClima extends Carta {
 
     private final EfectoClima efecto;
 
-    public CartaClima(String nombre, Faccion faccion, EfectoClima efecto) {
-        super(nombre, faccion);
+    public CartaClima(String nombre, Faccion faccion, EfectoClima efecto, String imagen) {
+        super(nombre, faccion, imagen);
         this.efecto = efecto;
     }
 

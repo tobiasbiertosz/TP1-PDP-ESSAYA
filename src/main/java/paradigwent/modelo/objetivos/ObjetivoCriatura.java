@@ -25,4 +25,9 @@ public class ObjetivoCriatura implements Objetivo {
     public void eliminar() {
         linea.descartar(criatura, descarteDelDuenio);
     }
+
+    @Override
+    public String descripcion() {
+        return criatura.getNombre() + " (" + linea.getTipo().getNombre() + ")";
+    }
 }

@@ -10,10 +10,12 @@ public abstract class Carta {
 
     protected String nombre;
     protected Faccion faccion;
+    protected String imagen;
 
-    public Carta(String nombre, Faccion faccion) {
+    public Carta(String nombre, Faccion faccion, String imagen) {
         this.nombre = nombre;
         this.faccion = faccion;
+        this.imagen = imagen;
     }
 
     /**
@@ -38,5 +40,14 @@ public abstract class Carta {
 
     public Faccion getFaccion() {
         return faccion;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    /** Texto de fuerza para mostrar en la vista. Las cartas sin fuerza no muestran nada. */
+    public String textoDeFuerza() {
+        return "";
     }
 }

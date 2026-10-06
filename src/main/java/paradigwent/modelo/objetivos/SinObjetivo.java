@@ -15,4 +15,9 @@ public class SinObjetivo implements Objetivo {
     public void eliminar() {
         // nada que eliminar
     }
+
+    @Override
+    public String descripcion() {
+        return "Sin objetivo";
+    }
 }

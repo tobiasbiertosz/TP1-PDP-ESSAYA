@@ -22,4 +22,9 @@ public class ObjetivoFila implements Objetivo {
     public void eliminar() {
         linea.descartarTodas(descarteDelDuenio);
     }
+
+    @Override
+    public String descripcion() {
+        return "Fila " + linea.getTipo().getNombre();
+    }
 }

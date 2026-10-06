@@ -35,4 +35,8 @@ public class Mano {
     public List<Carta> getCartas() {
         return Collections.unmodifiableList(cartas);
     }
+
+    public void agregarCarta(Carta carta) {
+        cartas.add(carta);
+    }
 }

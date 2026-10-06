@@ -86,4 +86,21 @@ public class Jugador {
     public int getVidas() {
         return vidas;
     }
+
+    /** Devuelve la ultima carta del descarte a la mano (si hay alguna). */
+    public void resucitarUltimaCarta() {
+        Carta carta = descarte.sacarUltima();
+        if (carta != null) {
+            mano.agregarCarta(carta);
+        }
+    }
+
+    /** El jugador humano espera las ordenes de la vista; la IA juega sola. */
+    public boolean juegaSolo() {
+        return false;
+    }
+
+    public void jugarTurno(Partida partida) {
+        throw new IllegalStateException(nombre + " no juega solo");
+    }
 }
