@@ -9,6 +9,9 @@ import paradigwent.modelo.Partida;
 import paradigwent.modelo.objetivos.Objetivo;
 import paradigwent.vista.OyenteDeTablero;
 import paradigwent.vista.VistaTablero;
+import paradigwent.vista.audio.ReproductorDeAudio;
+import paradigwent.vista.audio.Sonido;
+import paradigwent.vista.audio.SonidosDePartida;
 
 import java.util.List;
 
@@ -20,21 +23,26 @@ public class ControladorPartida implements OyenteDeTablero {
     private final Partida partida;
     private final Jugador humano;
     private final VistaTablero vista;
+    private final ReproductorDeAudio audio;
     private final Runnable alTerminar;
 
-    public ControladorPartida(Partida partida, Runnable alTerminar) {
+    public ControladorPartida(Partida partida, ReproductorDeAudio audio, Runnable alTerminar) {
         this.partida = partida;
         this.humano = partida.getJugador1();
+        this.audio = audio;
         this.alTerminar = alTerminar;
         this.vista = new VistaTablero(partida, this);
+        partida.agregarObservador(new SonidosDePartida(audio));
     }
 
     public Parent getRaiz() {
         return vista.getRaiz();
     }
 
-    /** Se llama una vez que la vista ya esta en pantalla: si arranca la IA, que juegue. */
+    /** Se llama una vez que la vista ya esta en pantalla: arranca la musica y, si empieza la IA, que juegue. */
     public void iniciar() {
+        audio.detenerTodo();
+        audio.iniciarMusicaDeFondo();
         despuesDeUnaJugada();
     }
 
@@ -77,10 +85,17 @@ public class ControladorPartida implements OyenteDeTablero {
     private void despuesDeUnaJugada() {
         vista.actualizar();
         if (partida.estaTerminada()) {
-            vista.mostrarResultado(mensajeFinal(), alTerminar);
+            terminarPartida();
         } else if (turnoActual().juegaSolo()) {
             programarJugadaAutomatica();
         }
+    }
+
+    /** Corta la musica de fondo, hace sonar victoria o derrota y muestra el resultado. */
+    private void terminarPartida() {
+        audio.detenerTodo();
+        audio.reproducir(partida.obtenerGanadorPartida() == humano ? Sonido.VICTORIA : Sonido.DERROTA);
+        vista.mostrarResultado(mensajeFinal(), alTerminar);
     }
 
     /** Pausa corta para que se note que la computadora jugo, y despues juega. */

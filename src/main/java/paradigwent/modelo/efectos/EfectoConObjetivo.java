@@ -25,4 +25,11 @@ public abstract class EfectoConObjetivo implements Efecto {
         return candidatos.isEmpty() ? List.of(new SinObjetivo()) : candidatos;
     }
 
-    protected abstract List<Objetivo> candidatos(Jugador duenio, Tablero tablero);}
+    protected abstract List<Objetivo> candidatos(Jugador duenio, Tablero tablero);
+
+    protected Bando getBando() {
+        return bando;
+    }
+}
+
+

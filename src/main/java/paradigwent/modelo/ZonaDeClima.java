@@ -9,12 +9,12 @@ import paradigwent.modelo.efectos.EfectoClima;
 public class ZonaDeClima implements EfectoClima {
 
     private CartaClima cartaActiva;
-    private PilaDescarte descarteDelDuenio;
+    private Jugador duenio;
 
-    public void colocar(CartaClima nueva, PilaDescarte descarteDelJugador) {
+    public void colocar(CartaClima nueva, Jugador jugador) {
         descartarActual();
         cartaActiva = nueva;
-        descarteDelDuenio = descarteDelJugador;
+        duenio = jugador;
     }
 
     public void limpiar() {
@@ -23,9 +23,9 @@ public class ZonaDeClima implements EfectoClima {
 
     private void descartarActual() {
         if (cartaActiva != null) {
-            descarteDelDuenio.agregar(cartaActiva);
+            duenio.descartar(cartaActiva);
             cartaActiva = null;
-            descarteDelDuenio = null;
+            duenio = null;
         }
     }
 
@@ -34,7 +34,17 @@ public class ZonaDeClima implements EfectoClima {
         return cartaActiva == null ? fuerza : cartaActiva.modificar(linea, fuerza);
     }
 
+    @Override
+    public String descripcion() {
+        return cartaActiva == null ? "Sin clima activo." : cartaActiva.descripcion();
+    }
+
     public CartaClima getCartaActiva() {
         return cartaActiva;
+    }
+
+    /** Jugador que puso el clima activo, o null si no hay clima. */
+    public Jugador getDuenio() {
+        return duenio;
     }
 }

@@ -8,6 +8,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -29,9 +31,13 @@ import java.util.function.Consumer;
 /** Dibuja el estado de una Partida. El jugador 1 es el humano (abajo). */
 public class VistaTablero {
 
-    private static final double ANCHO_EN_FILA = 40;
+    private static final double ANCHO_EN_FILA = 46;
     private static final double ANCHO_EN_MANO = 72;
+    private static final double ANCHO_CLIMA = 50;
     private static final double ALTO_FILA = ANCHO_EN_FILA * 1.5 + 8;
+    private static final double ANCHO_PANEL_IZQUIERDO = 170;
+    private static final double ANCHO_REGISTRO = 200;
+    private static final int MAXIMO_ENTRADAS_REGISTRO = 60;
 
     private static final List<TipoLinea> ORDEN_RIVAL =
             List.of(TipoLinea.ASEDIO, TipoLinea.DISTANCIA, TipoLinea.CUERPO_A_CUERPO);
@@ -41,6 +47,10 @@ public class VistaTablero {
     private static final String ESTILO_ZONA =
             "-fx-background-color: rgba(255, 255, 255, 0.08); -fx-background-radius: 6;";
     private static final String ESTILO_TEXTO = "-fx-text-fill: white;";
+    private static final String ESTILO_TEXTO_SUAVE = "-fx-text-fill: #cccccc; -fx-font-size: 11px;";
+    private static final String ESTILO_MARCA_DUPLICADA =
+            "-fx-background-color: #d4a017; -fx-text-fill: black; -fx-font-weight: bold;"
+                    + "-fx-font-size: 11px; -fx-padding: 1 5 1 5; -fx-background-radius: 8;";
 
     private final Partida partida;
     private final Jugador local;
@@ -63,6 +73,7 @@ public class VistaTablero {
         Tablero tablero = partida.getRondaActual().getTablero();
         raiz.setLeft(crearPanelLateral(tablero));
         raiz.setCenter(crearCentro(tablero));
+        raiz.setRight(crearRegistro());
         raiz.setBottom(crearMano());
     }
 
@@ -94,7 +105,7 @@ public class VistaTablero {
         alerta.show();
     }
 
-    // ---------- panel lateral: datos de cada jugador y botones ----------
+    // ---------- izquierda: jugadores, clima y botones ----------
 
     private Node crearPanelLateral(Tablero tablero) {
         boolean esMiTurno = partida.getRondaActual().getTurnoActual() == local;
@@ -112,15 +123,17 @@ public class VistaTablero {
         Button rendirse = new Button("Rendirse");
         rendirse.setOnAction(e -> oyente.alRendirse());
 
-        VBox panel = new VBox(10,
+        VBox panel = new VBox(8,
                 crearPanelJugador(rival, tablero),
+                crearPanelClima(tablero),
                 separador,
                 turno,
                 crearPanelJugador(local, tablero),
                 new HBox(8, pasar, rendirse));
         panel.setPadding(new Insets(10));
-        panel.setPrefWidth(170);
-        panel.setMinWidth(170);
+        panel.setPrefWidth(ANCHO_PANEL_IZQUIERDO);
+        panel.setMinWidth(ANCHO_PANEL_IZQUIERDO);
+        panel.setMaxWidth(ANCHO_PANEL_IZQUIERDO);
         return panel;
     }
 
@@ -133,8 +146,8 @@ public class VistaTablero {
                 etiqueta("Vidas: " + jugador.getVidas()),
                 etiqueta("Fuerza total: " + tablero.calcularFuerzaJugador(jugador)),
                 etiqueta("Mano: " + jugador.getMano().getCartas().size()),
-                etiqueta("Mazo: " + jugador.getMazo().cantidadDeCartas()),
-                etiqueta("Descarte: " + jugador.getDescarte().getCartas().size()));
+                etiqueta("Mazo: " + jugador.getMazo().cantidadDeCartas()
+                        + " · Descarte: " + jugador.getDescarte().getCartas().size()));
         if (jugador.haPasado()) {
             datos.getChildren().add(etiqueta("Pasó"));
         }
@@ -143,19 +156,53 @@ public class VistaTablero {
         return datos;
     }
 
+    /** El clima activo (afecta a ambos jugadores) tiene su propio lugar, fuera de las filas. */
+    private Node crearPanelClima(Tablero tablero) {
+        Label titulo = etiqueta("Clima");
+        titulo.setStyle(ESTILO_TEXTO + "-fx-font-weight: bold; -fx-font-size: 14px;");
+
+        VBox panel = new VBox(6, titulo);
+        panel.setAlignment(Pos.TOP_CENTER);
+        panel.setPadding(new Insets(8));
+        panel.setStyle(ESTILO_ZONA);
+
+        CartaClima clima = tablero.getClimaActivo();
+        if (clima == null) {
+            panel.getChildren().add(crearTextoSuave("Sin clima activo"));
+            return panel;
+        }
+
+        Label quien = etiqueta(clima.getNombre() + " — " + tablero.getDuenioDelClima().getNombre());
+        quien.setWrapText(true);
+        quien.setStyle(ESTILO_TEXTO + "-fx-font-size: 11px; -fx-font-weight: bold;");
+
+        panel.getChildren().addAll(
+                new VistaCarta(clima, ANCHO_CLIMA),
+                quien,
+                crearTextoSuave(clima.descripcion()));
+        return panel;
+    }
+
+    private Label crearTextoSuave(String texto) {
+        Label label = new Label(texto);
+        label.setWrapText(true);
+        label.setMaxWidth(ANCHO_PANEL_IZQUIERDO - 40);
+        label.setStyle(ESTILO_TEXTO_SUAVE);
+        return label;
+    }
+
     private Label etiqueta(String texto) {
         Label label = new Label(texto);
         label.setStyle(ESTILO_TEXTO);
         return label;
     }
 
-    // ---------- centro: filas de ataque y clima ----------
+    // ---------- centro: las filas de ataque de cada jugador ----------
 
     private Node crearCentro(Tablero tablero) {
         VBox centro = new VBox(4);
         centro.setPadding(new Insets(8));
         centro.getChildren().addAll(crearFilas(tablero, rival, ORDEN_RIVAL));
-        centro.getChildren().add(crearZonaClima(tablero));
         centro.getChildren().addAll(crearFilas(tablero, local, ORDEN_LOCAL));
         return centro;
     }
@@ -172,10 +219,17 @@ public class VistaTablero {
         Label puntos = new Label(String.valueOf(tablero.calcularFuerzaLinea(jugador, tipo)));
         puntos.setStyle(ESTILO_TEXTO + "-fx-font-size: 20px; -fx-font-weight: bold;");
 
+        HBox puntosYMarca = new HBox(4, puntos);
+        puntosYMarca.setAlignment(Pos.CENTER);
+        int multiplicador = tablero.multiplicadorLinea(jugador, tipo);
+        if (multiplicador > 1) {
+            puntosYMarca.getChildren().add(crearMarcaDeFilaDuplicada(multiplicador));
+        }
+
         Label nombreLinea = new Label(tipo.getNombre());
         nombreLinea.setStyle("-fx-text-fill: #bbbbbb; -fx-font-size: 10px;");
 
-        VBox encabezado = new VBox(2, puntos, nombreLinea);
+        VBox encabezado = new VBox(2, puntosYMarca, nombreLinea);
         encabezado.setAlignment(Pos.CENTER);
         encabezado.setMinWidth(90);
         encabezado.setPrefWidth(90);
@@ -183,7 +237,11 @@ public class VistaTablero {
         HBox cartas = new HBox(4);
         cartas.setAlignment(Pos.CENTER_LEFT);
         for (Criatura criatura : tablero.criaturasEn(jugador, tipo)) {
-            cartas.getChildren().add(new VistaCarta(criatura, ANCHO_EN_FILA));
+            VistaCarta vistaCarta = new VistaCarta(criatura, ANCHO_EN_FILA);
+            vistaCarta.mostrarFuerzaReal(
+                    tablero.calcularFuerzaCriatura(jugador, tipo, criatura),
+                    criatura.getFuerzaBase());
+            cartas.getChildren().add(vistaCarta);
         }
 
         HBox fila = new HBox(8, encabezado, cartas);
@@ -195,24 +253,47 @@ public class VistaTablero {
         return fila;
     }
 
-    private Node crearZonaClima(Tablero tablero) {
-        Label titulo = new Label("Clima");
-        titulo.setStyle(ESTILO_TEXTO + "-fx-font-size: 14px; -fx-font-weight: bold;");
-        titulo.setMinWidth(90);
-        titulo.setAlignment(Pos.CENTER);
+    private Label crearMarcaDeFilaDuplicada(int multiplicador) {
+        Label marca = new Label("x" + multiplicador);
+        marca.setStyle(ESTILO_MARCA_DUPLICADA);
+        Tooltip.install(marca, new Tooltip(
+                "Fila duplicada: su fuerza se multiplica por " + multiplicador
+                        + " hasta que termine la ronda."));
+        return marca;
+    }
 
-        HBox zona = new HBox(8, titulo);
-        zona.setAlignment(Pos.CENTER_LEFT);
-        zona.setMinHeight(ALTO_FILA);
-        zona.setPrefHeight(ALTO_FILA);
-        zona.setMaxHeight(ALTO_FILA);
-        zona.setStyle(ESTILO_ZONA);
+    // ---------- derecha: registro de lo que se fue jugando ----------
 
-        CartaClima clima = tablero.getClimaActivo();
-        if (clima != null) {
-            zona.getChildren().add(new VistaCarta(clima, ANCHO_EN_FILA));
+    private Node crearRegistro() {
+        List<String> entradas = partida.getHistorial().getEntradas();
+        int desde = Math.max(0, entradas.size() - MAXIMO_ENTRADAS_REGISTRO);
+
+        VBox lista = new VBox(6);
+        lista.setPadding(new Insets(6));
+        for (String entrada : entradas.subList(desde, entradas.size())) {
+            Label linea = new Label(entrada);
+            linea.setWrapText(true);
+            linea.setMaxWidth(ANCHO_REGISTRO - 45);
+            linea.setStyle(ESTILO_TEXTO + "-fx-font-size: 11px;");
+            lista.getChildren().add(linea);
         }
-        return zona;
+
+        ScrollPane scroll = new ScrollPane(lista);
+        scroll.setFitToWidth(true);
+        scroll.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
+        // el panel se rehace en cada actualizacion: se baja hasta lo mas nuevo
+        lista.heightProperty().addListener((observable, antes, ahora) -> scroll.setVvalue(1.0));
+
+        Label titulo = etiqueta("Registro de jugadas");
+        titulo.setStyle(ESTILO_TEXTO + "-fx-font-weight: bold; -fx-font-size: 14px;");
+
+        VBox panel = new VBox(6, titulo, scroll);
+        VBox.setVgrow(scroll, Priority.ALWAYS);
+        panel.setPadding(new Insets(10));
+        panel.setPrefWidth(ANCHO_REGISTRO);
+        panel.setMinWidth(ANCHO_REGISTRO);
+        panel.setMaxWidth(ANCHO_REGISTRO);
+        return panel;
     }
 
     // ---------- abajo: la mano del jugador ----------

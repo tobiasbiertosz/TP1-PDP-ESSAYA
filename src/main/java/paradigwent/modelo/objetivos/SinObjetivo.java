@@ -18,6 +18,6 @@ public class SinObjetivo implements Objetivo {
 
     @Override
     public String descripcion() {
-        return "Sin objetivo";
+        return "";
     }
 }

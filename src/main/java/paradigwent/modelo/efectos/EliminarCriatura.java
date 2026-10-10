@@ -21,4 +21,10 @@ public class EliminarCriatura extends EfectoConObjetivo {
     public void aplicar(Jugador jugador, Tablero tablero, Objetivo objetivo) {
         objetivo.eliminar();
     }
+
+    @Override
+    public String descripcion() {
+        return "Elimina una criatura " + getBando().getDescripcion()
+                + " a elección y la manda al descarte.";
+    }
 }

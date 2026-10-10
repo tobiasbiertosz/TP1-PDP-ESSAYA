@@ -19,4 +19,9 @@ public class SinEfecto implements Efecto {
     public void aplicar(Jugador jugador, Tablero tablero, Objetivo objetivo) {
         // no hace nada
     }
+
+    @Override
+    public String descripcion() {
+        return "";
+    }
 }

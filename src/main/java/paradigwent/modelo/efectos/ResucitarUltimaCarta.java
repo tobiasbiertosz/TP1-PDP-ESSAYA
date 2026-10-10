@@ -19,4 +19,9 @@ public class ResucitarUltimaCarta implements Efecto {
     public void aplicar(Jugador jugador, Tablero tablero, Objetivo objetivo) {
         jugador.resucitarUltimaCarta();
     }
+
+    @Override
+    public String descripcion() {
+        return "Devuelve a tu mano la última carta de tu descarte.";
+    }
 }

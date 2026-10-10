@@ -21,4 +21,10 @@ public class DuplicarFila extends EfectoConObjetivo {
     public void aplicar(Jugador jugador, Tablero tablero, Objetivo objetivo) {
         objetivo.duplicarFuerza();
     }
+
+    @Override
+    public String descripcion() {
+        return "Duplica la fuerza de toda una fila " + getBando().getDescripcion()
+                + " a elección, hasta que termine la ronda.";
+    }
 }

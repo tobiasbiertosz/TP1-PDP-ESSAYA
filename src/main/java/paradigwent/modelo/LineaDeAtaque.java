@@ -29,9 +29,18 @@ public class LineaDeAtaque {
     public int calcularFuerzaTotal(EfectoClima clima) {
         int total = 0;
         for (Criatura criatura : criaturas) {
-            total += criatura.calcularFuerza(clima);
+            total += calcularFuerzaDe(criatura, clima);
         }
-        return total * multiplicador;
+        return total;
+    }
+
+    /** Fuerza de una criatura de esta linea, ya con el clima y la duplicacion de la fila. */
+    public int calcularFuerzaDe(Criatura criatura, EfectoClima clima) {
+        return criatura.calcularFuerza(clima) * multiplicador;
+    }
+
+    public int getMultiplicador() {
+        return multiplicador;
     }
 
     /** Saca la criatura de la linea y la manda al descarte, sin modificadores. */

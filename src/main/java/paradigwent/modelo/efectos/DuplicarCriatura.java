@@ -21,4 +21,9 @@ public class DuplicarCriatura extends EfectoConObjetivo {
     public void aplicar(Jugador jugador, Tablero tablero, Objetivo objetivo) {
         objetivo.duplicarFuerza();
     }
+
+    @Override
+    public String descripcion() {
+        return "Duplica la fuerza de una criatura " + getBando().getDescripcion() + " a elección.";
+    }
 }

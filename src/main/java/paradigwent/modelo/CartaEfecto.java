@@ -24,4 +24,14 @@ public class CartaEfecto extends Carta {
         efecto.aplicar(jugador, tablero, objetivo);
         jugador.descartar(this);
     }
+
+    @Override
+    public String descripcion() {
+        return "Carta de efecto: " + efecto.descripcion();
+    }
+
+    @Override
+    public TipoDeCarta getTipo() {
+        return TipoDeCarta.EFECTO;
+    }
 }

@@ -50,4 +50,9 @@ public abstract class Carta {
     public String textoDeFuerza() {
         return "";
     }
+
+    /** Explica que hace la carta (para mostrarlo al jugador). */
+    public abstract String descripcion();
+
+    public abstract TipoDeCarta getTipo();
 }

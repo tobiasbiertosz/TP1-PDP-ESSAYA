@@ -20,4 +20,14 @@ public class CartaClima extends Carta {
     public int modificar(TipoLinea linea, int fuerza) {
         return efecto.modificar(linea, fuerza);
     }
+
+    @Override
+    public String descripcion() {
+        return "Carta de clima: " + efecto.descripcion();
+    }
+
+    @Override
+    public TipoDeCarta getTipo() {
+        return TipoDeCarta.CLIMA;
+    }
 }

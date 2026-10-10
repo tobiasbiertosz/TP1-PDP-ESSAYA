@@ -44,7 +44,22 @@ public class Tablero {
     }
 
     public void aplicarClima(Jugador jugador, CartaClima nuevoClima) {
-        zonaDeClima.colocar(nuevoClima, jugador.getDescarte());
+        zonaDeClima.colocar(nuevoClima, jugador);
+    }
+
+    /** Fuerza de una criatura con el clima y la duplicacion de su fila aplicados. */
+    public int calcularFuerzaCriatura(Jugador jugador, TipoLinea tipo, Criatura criatura) {
+        return lineasDe(jugador).get(tipo).calcularFuerzaDe(criatura, zonaDeClima);
+    }
+
+    /** 1 si la fila no esta duplicada, 2 si esta duplicada una vez, 4 si dos veces, etc. */
+    public int multiplicadorLinea(Jugador jugador, TipoLinea tipo) {
+        return lineasDe(jugador).get(tipo).getMultiplicador();
+    }
+
+    /** Jugador que puso el clima activo, o null si no hay clima. */
+    public Jugador getDuenioDelClima() {
+        return zonaDeClima.getDuenio();
     }
 
     /** Una opcion por cada criatura que tiene en juego el duenio. */

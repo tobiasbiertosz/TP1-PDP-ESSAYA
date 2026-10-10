@@ -65,4 +65,17 @@ public class Criatura extends Carta {
     public String textoDeFuerza() {
         return String.valueOf(fuerzaBase);
     }
+
+    @Override
+    public String descripcion() {
+        String texto = "Criatura de " + tipoLinea.getNombre().toLowerCase()
+                + ", fuerza " + fuerzaBase + ".";
+        String textoHabilidad = habilidad.descripcion();
+        return textoHabilidad.isEmpty() ? texto : texto + "\nHabilidad: " + textoHabilidad;
+    }
+
+    @Override
+    public TipoDeCarta getTipo() {
+        return TipoDeCarta.CRIATURA;
+    }
 }

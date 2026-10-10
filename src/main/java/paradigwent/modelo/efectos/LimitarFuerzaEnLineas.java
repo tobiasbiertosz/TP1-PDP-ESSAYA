@@ -4,8 +4,9 @@ import paradigwent.modelo.TipoLinea;
 
 import java.util.EnumSet;
 import java.util.Set;
+import java.util.StringJoiner;
 
-/** Ej: "Escarcha": la fuerza de las criaturas de ciertas lineas no pasa de 1. */
+/** Ej: "Escarcha": la fuerza de las criaturas de ciertas líneas no pasa de 1. */
 public class LimitarFuerzaEnLineas implements EfectoClima {
 
     private final int fuerzaMaxima;
@@ -20,5 +21,15 @@ public class LimitarFuerzaEnLineas implements EfectoClima {
     @Override
     public int modificar(TipoLinea linea, int fuerza) {
         return lineasAfectadas.contains(linea) ? Math.min(fuerza, fuerzaMaxima) : fuerza;
+    }
+
+    @Override
+    public String descripcion() {
+        StringJoiner lineas = new StringJoiner(", ");
+        for (TipoLinea linea : lineasAfectadas) {
+            lineas.add(linea.getNombre());
+        }
+        return "La fuerza de cada criatura en " + lineas + " no puede superar "
+                + fuerzaMaxima + ". Afecta a ambos jugadores.";
     }
 }

@@ -18,4 +18,7 @@ public interface Efecto {
     List<Objetivo> objetivosPosibles(Jugador jugador, Tablero tablero);
 
     void aplicar(Jugador jugador, Tablero tablero, Objetivo objetivo);
+
+    /** Frase que explica que hace el efecto. Vacia si no hace nada. */
+    String descripcion();
 }

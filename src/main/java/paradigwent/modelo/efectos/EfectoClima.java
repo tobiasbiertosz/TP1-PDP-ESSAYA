@@ -6,4 +6,7 @@ import paradigwent.modelo.TipoLinea;
 public interface EfectoClima {
 
     int modificar(TipoLinea linea, int fuerza);
+
+    /** Frase que explica que hace el clima. */
+    String descripcion();
 }
