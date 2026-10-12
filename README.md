@@ -14,6 +14,10 @@ Trabajo práctico desarrollado en Java utilizando Maven y JavaFX.
 - Java 21
 - Maven
 - JavaFX
+
+## Material audiovisual
+- https://drive.google.com/file/d/104jySG4Xv6MhYPz7VETh0alZvTGhJ7Sx/view?usp=sharing
+- https://youtu.be/i_AxfB_trGw
 ## Créditos de audio
 
 Todo el audio proviene de [Pixabay](https://pixabay.com) (Pixabay Content License).
